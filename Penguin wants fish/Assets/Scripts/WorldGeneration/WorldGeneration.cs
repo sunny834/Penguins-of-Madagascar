@@ -15,6 +15,13 @@ public class WorldGeneration : MonoBehaviour
     [SerializeField] private float DeSpawnDistance = 5.0f;
     [SerializeField] private List<GameObject> Chunksprefabs;
     [SerializeField] private Transform CameraTransform;
+
+    #region TO DELETE
+    private void Awake()
+    {
+        ResetWorld();
+    }
+    #endregion
     private void Start()
     {
         if (Chunksprefabs.Count==0)
@@ -36,19 +43,46 @@ public class WorldGeneration : MonoBehaviour
     }
     private void ScanPosition()
     {
-
+        float cameraZ=CameraTransform.position.z;
+        Chunk LastChunk= activeChunks.Peek();
+        if (cameraZ >= LastChunk.transform.position.z + LastChunk.chunkLength + DeSpawnDistance)
+        { 
+            SpawnNewChunk();
+            DeleteLastChunk();
+        }
 
     }
-    private void ScanNewChunk()
+    private void SpawnNewChunk()
     {
-
+        int randomIndex = Random.Range(0, Chunksprefabs.Count);
+        Chunk chunk = chunkpool.Find(x=>!x.gameObject.activeSelf && x.name == (Chunksprefabs[randomIndex].name + "(Clone)"));
+        if(!chunk)
+        {
+            GameObject go = Instantiate(Chunksprefabs[randomIndex], transform);
+            chunk = go.GetComponent<Chunk>();
+        }
+        chunk.transform.position =  new Vector3(0,0,ChunkSpawnZ);
+        ChunkSpawnZ += chunk.chunkLength;
+        activeChunks.Enqueue(chunk);
+        chunk.ShowChunk();
     }
     private void DeleteLastChunk()
     {
-
+        Chunk chunk = activeChunks.Dequeue();
+        chunk.HideChunk();
+        chunkpool.Add(chunk);
     }
     public void ResetWorld()
     {
-        
+        ChunkSpawnZ = FirstChunkSpawnPositions;
+        for (int i = activeChunks.Count; i != 0; i--)
+        {
+            DeleteLastChunk();
+
+        }
+        for (int i = 0;i<ChunkOnSize;i++)
+        {
+            SpawnNewChunk();
+        }
     }
 }
