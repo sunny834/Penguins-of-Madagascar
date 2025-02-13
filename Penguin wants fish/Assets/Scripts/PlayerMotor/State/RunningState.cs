@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class RunningState : BaseState
 {
+    public override void Construct()
+    {
+        motor.verticalVelocity = 0;
+    }
     public override Vector3 ProcessMotion()
     {
         Vector3 motion = Vector3.zero;
@@ -27,8 +31,15 @@ public class RunningState : BaseState
         }
         if (InputManager.Instance.SwipeUp && motor.isGrounded)
         {
-            // motor.ChangeState(GetComponent<JumpingState>());
+             motor.ChangeState(GetComponent<JumpingState>());
         }
-       
+        if (!motor.isGrounded)
+        {
+            motor.ChangeState(GetComponent<FallingState>());
+        }
+        if(InputManager.Instance.SwipeDown)
+        {
+            motor.ChangeState(GetComponent<SlidingState>());
+        }
     }
 }

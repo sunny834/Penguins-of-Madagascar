@@ -76,5 +76,11 @@ public class PlayerMotor : MonoBehaviour
         state = s;
         state.Construct();
     }
+    public void ApplyGravity()
+    {
+        verticalVelocity -=gravity*Time.deltaTime;
+        if(verticalVelocity < -terminalVelocity)
+            verticalVelocity = -terminalVelocity;
+    }
 
 }
