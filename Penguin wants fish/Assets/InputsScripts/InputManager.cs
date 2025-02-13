@@ -14,6 +14,8 @@ public class InputManager : MonoBehaviour
     //Action schemes
     private RunnerControl actionScheme;
 
+    //Configuration
+    [SerializeField] private float sqrSwipeDeadzone =50.0f;
     #region Pubilc properties
     public bool Tap { get { return tap; } }
     public Vector2 TouchPosition { get { return touchPosition; } }
@@ -39,35 +41,65 @@ public class InputManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         SetupControl();
     }
-
+    private void LateUpdate()
+    {
+        ResetInputs();
+    }
+    private void ResetInputs()
+    {
+       tap= swipeDown=swipeUp=swipeLeft=swipeRight=false;
+    }
     private void SetupControl()
     {
         actionScheme = new RunnerControl();
 
         actionScheme.Gameplay.Tap.performed += ctx => OnTap(ctx);
-        actionScheme.Gameplay.Tap.performed += ctx => OnPosition(ctx);
+        actionScheme.Gameplay.TouchPosition.performed += ctx => OnPosition(ctx);
         actionScheme.Gameplay.StartDrag.performed += ctx => OnStartDrag(ctx);
         actionScheme.Gameplay.EndDrag.performed += ctx => OnEndDrag(ctx);
     }
 
     private void OnEndDrag(InputAction.CallbackContext ctx)
     {
-        throw new NotImplementedException();
+
+        Vector2 delta =touchPosition - startDrag;
+        float sqrDisatance = delta.sqrMagnitude;
+        // confirmed swipe
+        if (sqrDisatance > sqrSwipeDeadzone)
+        {
+            float x=Mathf.Abs(delta.x);
+            float y= Mathf.Abs(delta.y);
+            if (x > y)// left or right
+            {
+                if(delta.x > 0)
+                    swipeRight = true;
+                else 
+                    swipeLeft = true;
+            }
+            else //up or down
+            {
+                if (delta.y > 0)
+                    swipeUp = true;
+                else 
+                    swipeDown = true;
+            }
+        }
+        startDrag=Vector2.zero;
     }
 
     private void OnStartDrag(InputAction.CallbackContext ctx)
     {
-        throw new NotImplementedException();
+        startDrag = touchPosition;
     }
 
     private void OnPosition(InputAction.CallbackContext ctx)
     {
-        throw new NotImplementedException();
+        touchPosition = ctx.ReadValue<Vector2>();
     }
 
     private void OnTap(InputAction.CallbackContext ctx)
     {
-        throw new NotImplementedException();
+        tap =true;
     }
 
     public void OnEnable()
