@@ -14,6 +14,7 @@ public class SlidingState : BaseState
 
     public override void Construct()
     {
+        motor.ani?.SetTrigger("Slide");
         slideStart = Time.time; 
         initialCenter = motor.controller.center;
         initialSize=motor.controller.height;
@@ -25,6 +26,7 @@ public class SlidingState : BaseState
     {
         motor.controller.height = initialSize;
         motor.controller.center = initialCenter;
+        motor.ani?.SetTrigger("Running");
     }
     public override void Transition()
     {
@@ -49,7 +51,7 @@ public class SlidingState : BaseState
     {
         Vector3 m =Vector3.zero;
 
-        m.x = motor.SnapTolane();
+        m.x = motor.SnapToLane();
         m.y = -1.0f;
         m.z = motor.baseRunSpeed;
          return m;

@@ -8,79 +8,127 @@ public class PlayerMotor : MonoBehaviour
     [HideInInspector] public Vector3 moveVector;
     [HideInInspector] public float verticalVelocity;
     [HideInInspector] public bool isGrounded;
-    [HideInInspector] public int currentLane;
+    [HideInInspector] public int currentLane = 0; // Default lane is center
 
-    public float distanceInBetweenLenes = 3.0f;
+    public float distanceInBetweenLanes = 3.0f;
     public float baseRunSpeed = 5.0f;
     public float baseSidewaySpeed = 10.0f;
     public float gravity = 14.0f;
     public float terminalVelocity = 20.0f;
 
     public CharacterController controller;
+    public Animator ani;
     private BaseState state;
+    private bool isPaused = true;
+
     private void Start()
     {
         controller = GetComponent<CharacterController>();
+        ani = GetComponent<Animator>();
         state = GetComponent<RunningState>();
+
+        if (state == null)
+        {
+            Debug.LogError("No RunningState found on Player!");
+            return;
+        }
+
         state.Construct();
     }
+
     private void Update()
     {
-        UpdateMotor();
+        if (!isPaused)
+        {
+            UpdateMotor();
+        }
     }
 
     private void UpdateMotor()
     {
-        //check if we're grounded
+        // Check if the player is grounded
         isGrounded = controller.isGrounded;
-        // How should we be moving right now? based on state
-        moveVector = state.ProcessMotion();
-        //are we trying to change state ?
-        state.Transition();
-        //move player
-        controller.Move(moveVector * Time.deltaTime);
 
+        // Apply movement based on the state
+        moveVector = state.ProcessMotion();
+
+        // Smoothly move towards the lane position
+        moveVector.x = SnapToLane();
+
+        // Handle state transitions
+        state.Transition();
+
+        // Update animator
+        ani?.SetBool("IsGrounded", isGrounded);
+        ani?.SetFloat("Speed", Mathf.Abs(moveVector.z));
+
+        // Move the player
+        controller.Move(moveVector * Time.deltaTime);
     }
 
-    public float SnapTolane()
+    public float SnapToLane()
     {
-        float r = 0.0f;
-        // if we are not directly on top of a lane
-        if (transform.position.x != (currentLane * distanceInBetweenLenes))
+        float targetX = currentLane * distanceInBetweenLanes;
+        float deltaToTarget = targetX - transform.position.x;
+
+        // Prevent floating-point errors from causing jitter
+        if (Mathf.Abs(deltaToTarget) < 0.05f)
         {
-            float deltaToDesiredPosition = (currentLane * distanceInBetweenLenes) - transform.position.x;
-            r = (deltaToDesiredPosition > 0) ? 1 : -1;
-            r *= baseSidewaySpeed;
-            float actualDistance = r * Time.deltaTime;
-            if (Math.Abs(actualDistance) < Math.Abs(deltaToDesiredPosition))
-            {
-                r = deltaToDesiredPosition * (1 / Time.deltaTime);
-            }
-        }
-        else
-        {
-            r = 0;
+            transform.position = new Vector3(targetX, transform.position.y, transform.position.z);
+            return 0;
         }
 
-            return r;
-        
+        float r = Mathf.Sign(deltaToTarget) * baseSidewaySpeed;
+        float actualMove = r * Time.deltaTime;
+
+        // Prevent overshooting
+        if (Mathf.Abs(actualMove) > Mathf.Abs(deltaToTarget))
+        {
+            return deltaToTarget / Time.deltaTime;
+        }
+
+        return r;
     }
 
     public void ChangeLane(int direction)
     {
-        currentLane=Mathf.Clamp(currentLane + direction, -1, 1);
+        currentLane = Mathf.Clamp(currentLane + direction, -1, 1);
     }
+
     public void ChangeState(BaseState s)
     {
-        state.Destruct();
+        if (state != null)
+        {
+            state.Destruct();
+        }
+
         state = s;
         state.Construct();
     }
+
     public void ApplyGravity()
     {
-        verticalVelocity -=gravity*Time.deltaTime;
-        if(verticalVelocity < -terminalVelocity)
-            verticalVelocity = -terminalVelocity;
+        if (isGrounded)
+        {
+            if (verticalVelocity < 0)
+                verticalVelocity = -2f; // Small value to stay grounded
+        }
+        else
+        {
+            verticalVelocity -= gravity * Time.deltaTime;
+        }
+
+        verticalVelocity = Mathf.Clamp(verticalVelocity, -terminalVelocity, terminalVelocity);
     }
 
+    public void PauseGame()
+    {
+        isPaused = true;
+        moveVector = Vector3.zero; // Stop movement when paused
+    }
+
+    public void ResumeGame()
+    {
+        isPaused = false;
+    }
 }

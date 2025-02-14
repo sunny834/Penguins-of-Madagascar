@@ -11,7 +11,7 @@ public class RunningState : BaseState
     public override Vector3 ProcessMotion()
     {
         Vector3 motion = Vector3.zero;
-        motion.x = motor.SnapTolane();
+        motion.x = motor.SnapToLane();
         motion.y = -1.0f;
         motion.z = motor.baseRunSpeed;
 

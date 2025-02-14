@@ -1,31 +1,42 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class JumpingState : BaseState
 {
     public float jumpForce = 7.0f;
+    private float gravityDelay = 0.5f; // Delay before gravity starts
+    private float jumpStartTime; // Track jump start time
+
     public override void Construct()
     {
-        motor.verticalVelocity = jumpForce;
+        motor.verticalVelocity = jumpForce; // Apply jump force
+        jumpStartTime = Time.time; // Save the time when the jump starts
+        motor.ani?.SetTrigger("Jump");
     }
+
     public override Vector3 ProcessMotion()
     {
-        //Apply gravity
-        motor.ApplyGravity();
-        //create our return vector
-        Vector3 m=Vector3.zero;
-        m.x = motor.SnapTolane();
-        m.y = motor.verticalVelocity;
-        m.z = motor.baseRunSpeed;
+        // Delay gravity application
+        if (Time.time - jumpStartTime > gravityDelay)
+        {
+            motor.ApplyGravity(); // Apply gravity after 1 second
+        }
 
-        return m;
+        // Create movement vector
+        Vector3 movement = Vector3.zero;
+        movement.x = motor.SnapToLane();
+        movement.y = motor.verticalVelocity;
+        movement.z = motor.baseRunSpeed;
+
+        return movement;
     }
+
     public override void Transition()
     {
-        if(motor.verticalVelocity<0)
+        // Switch to FallingState when velocity is negative
+        if (motor.verticalVelocity < 0)
         {
-            motor.ChangeState(GetComponent<FallingState>());
+            motor.ChangeState(motor.GetComponent<FallingState>());
         }
     }
 }
