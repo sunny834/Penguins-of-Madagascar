@@ -10,7 +10,7 @@ public abstract class GameState : MonoBehaviour
     }
     public virtual void Construct()
     {
-
+        Debug.Log("Contructing:" + this.ToString());
     }
     public virtual void Destruct()
     {

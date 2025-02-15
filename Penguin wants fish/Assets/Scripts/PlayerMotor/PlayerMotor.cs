@@ -131,4 +131,19 @@ public class PlayerMotor : MonoBehaviour
     {
         isPaused = false;
     }
+
+    public void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        string hitLayerName= LayerMask.LayerToName(hit.gameObject.layer);
+        if(hitLayerName=="Death")
+        {
+            ChangeState(GetComponent<DeathState>());
+        }
+    }
+
+    public void RespawnPlayer()
+    {
+        Debug.Log("oy");
+        ChangeState(GetComponent<RespawnState>());
+    }
 }
