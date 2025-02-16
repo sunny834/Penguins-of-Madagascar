@@ -786,7 +786,7 @@ MonoBehaviour:
   verticalVelocity: 0
   isGrounded: 0
   currentLane: 0
-  distanceInBetweenLanes: 3
+  distanceInBetweenLanes: 3.5
   baseRunSpeed: 5
   baseSidewaySpeed: 10
   gravity: 14
@@ -823,7 +823,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c03162698f72c9e41af8439571b80ade, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 3
+  jumpForce: 6
 --- !u!114 &909134879
 MonoBehaviour:
   m_ObjectHideFlags: 0

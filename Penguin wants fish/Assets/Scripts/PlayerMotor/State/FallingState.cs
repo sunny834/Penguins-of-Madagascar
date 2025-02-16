@@ -7,6 +7,7 @@ public class FallingState : BaseState
     public override void Construct()
     {
         motor.ani?.SetTrigger("Fall");
+        Debug.Log("am i failing");
     }
     public override Vector3 ProcessMotion()
     {

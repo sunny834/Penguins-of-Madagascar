@@ -3,9 +3,11 @@ using UnityEngine;
 public class DeathState : BaseState
 {
     [SerializeField] private Vector3 KnockOutForce =  new Vector3(0,4,-3);
+    private Vector2 currentKnockback;
     public override void Construct()
     {
         motor.ani?.SetTrigger("Death");
+        currentKnockback= KnockOutForce;
     }
     public override Vector3 ProcessMotion()
     {
