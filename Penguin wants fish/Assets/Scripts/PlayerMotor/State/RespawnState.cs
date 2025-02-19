@@ -14,11 +14,16 @@ public class RespawnState : BaseState
         startTime=Time.time;
         motor.controller.enabled = false;
         motor.transform.position = new Vector3(0, SpawnDistance,motor.transform.position.z);
-        motor.controller.enabled=false;
+        motor.controller.enabled=true;
 
         motor.verticalVelocity = 0.0f;
         motor.currentLane = 0;
         motor.ani?.SetTrigger("Respawn");
+     
+    }
+    public override void Destruct()
+    {
+        GameManager.Instance.ChangeCamera(GameManager.GameCamera.Game);
     }
     public override Vector3 ProcessMotion()
     {

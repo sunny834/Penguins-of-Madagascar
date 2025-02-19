@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public class GameStateDeath : GameState
@@ -22,11 +21,15 @@ public class GameStateDeath : GameState
     public void ToMenu()
     {
         brain.ChangeSate(GetComponent<GameStateInit>());
+        GameManager.Instance.motor.ResetPlayer();
+      
+
     }
     public void ResumeGame()
     {
         Debug.Log("heyyy");
-        GameManager.Instance.motor.RespawnPlayer();
         brain.ChangeSate(GetComponent<GameStateGame>());
+        GameManager.Instance.motor.RespawnPlayer();
+    
     }
 }

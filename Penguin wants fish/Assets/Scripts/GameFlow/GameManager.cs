@@ -4,10 +4,18 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public enum GameCamera
+    {
+        Init=0,
+        Game=1,
+        Shop=2,
+        Respawn=3
+    }
     public static GameManager Instance { get { return instance; } }
     public static GameManager instance;
 
     public PlayerMotor motor;
+    public GameObject[] Cameras;
 
     private GameState state;
     private void Awake()
@@ -25,5 +33,13 @@ public class GameManager : MonoBehaviour
         state.Destruct();
         state = s;
         state.Construct();
+    }
+    public void ChangeCamera(GameCamera cam)
+    {
+        foreach (GameObject go in Cameras)
+        {
+            go.SetActive(false);    
+        }
+        Cameras[(int)cam].SetActive(true);
     }
 }

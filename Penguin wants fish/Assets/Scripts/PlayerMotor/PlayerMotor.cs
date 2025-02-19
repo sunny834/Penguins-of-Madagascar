@@ -145,5 +145,16 @@ public class PlayerMotor : MonoBehaviour
     {
         Debug.Log("oy");
         ChangeState(GetComponent<RespawnState>());
+        GameManager.Instance.ChangeCamera(GameManager.GameCamera.Respawn);
+    }
+    public void ResetPlayer()
+    {
+        PauseGame();
+        transform.position = new Vector3(0, 0, -40);
+        ani?.SetTrigger("Idle");
+        ChangeState(GetComponent<RunningState>());
+        
+
+
     }
 }
