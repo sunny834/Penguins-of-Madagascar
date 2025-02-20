@@ -22,6 +22,7 @@ public class GameStateDeath : GameState
     {
         brain.ChangeSate(GetComponent<GameStateInit>());
         GameManager.Instance.motor.ResetPlayer();
+        GameManager.Instance.worldGeneration.ResetWorld();
       
 
     }

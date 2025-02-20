@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     public PlayerMotor motor;
+    public WorldGeneration worldGeneration;
+    public SceneGeneration sceneGeneration;
     public GameObject[] Cameras;
 
     private GameState state;
