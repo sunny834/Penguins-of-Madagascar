@@ -1,20 +1,42 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameStateDeath : GameState
 {
+    public GameObject DeathUI;
+    [SerializeField] private TextMeshProUGUI HiScore;
+    [SerializeField] private TextMeshProUGUI FishCount;
+    [SerializeField] private TextMeshProUGUI CurrentHiScore;
+    [SerializeField] private TextMeshProUGUI CurrentFishCatched;
+    //circle field
+    [SerializeField] private Image completionCircle;
+    public float ReviveTime = 3.5f;
+    private float DeathTime;
+
     public override void Construct()
     {
         GameManager.Instance.motor.PauseGame();
+        DeathUI.SetActive(true);
+        completionCircle.gameObject.SetActive(true);
+        DeathTime = Time.time;
+        HiScore.text = "HighScore" + "TBD";
+        FishCount.text = "Fish" + "TBD";
+        CurrentHiScore.text = "TBD";
+        CurrentFishCatched.text ="TBD";
+    }
+    public override void Destruct()
+    {
+        DeathUI.SetActive(false);
     }
     public override void UpdateState()
     {
-        if(InputManager.Instance.SwipeDown)
+        float ratio=(Time.time-DeathTime)/ReviveTime;
+        completionCircle.color = Color.Lerp(Color.green, Color.red, ratio);
+        completionCircle.fillAmount = 1-ratio;
+        if (ratio > 1)
         {
-            ToMenu();
-        }
-        if (InputManager.Instance.SwipeUp)
-        {
-            ResumeGame();
+            completionCircle.gameObject.SetActive(false);   
         }
 
     }
