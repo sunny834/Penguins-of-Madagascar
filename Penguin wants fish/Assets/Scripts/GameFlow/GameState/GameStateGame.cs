@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -12,15 +13,29 @@ public class GameStateGame : GameState
     {
         GameManager.instance.motor.ResumeGame();
         GameManager.Instance.ChangeCamera(GameManager.GameCamera.Game);
+        GameStats.Instance.OnCollectionFish += OnCollectFish;
+        GameStats.Instance.OnScoreChange += OnScore;
         HiScore.text = "xTBD";
         FishCounts.text = "TBD";
         GameCanvas.SetActive(true);
 
       
     }
+
+    private void OnScore(float Score)
+    {
+        HiScore.text=Score.ToString("000");
+    }
+
+    private void OnCollectFish(int TotalCollected)
+    {
+        FishCounts.text = TotalCollected.ToString("000000");
+    }
     public override void Destruct()
     {
         GameCanvas.SetActive(false);
+        GameStats.Instance.OnCollectionFish -= OnCollectFish;
+        GameStats.Instance.OnScoreChange -= OnScore;
     }
     public override void UpdateState()
     {

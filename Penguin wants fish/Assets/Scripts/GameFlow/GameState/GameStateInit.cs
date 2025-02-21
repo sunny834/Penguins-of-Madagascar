@@ -24,6 +24,7 @@ public class GameStateInit :GameState
     public void OnClickPlay()
     {
         brain.ChangeSate(GetComponent<GameStateGame>());
+        GameStats.Instance.ResetSeason();
     }
     public void OnClickShop()
     {
