@@ -24,12 +24,12 @@ public class GameStateGame : GameState
 
     private void OnScore(float Score)
     {
-        HiScore.text=Score.ToString("000");
+        HiScore.text=Score.ToString("0000000");
     }
 
     private void OnCollectFish(int TotalCollected)
     {
-        FishCounts.text = TotalCollected.ToString("000000");
+        FishCounts.text = TotalCollected.ToString("000");
     }
     public override void Destruct()
     {
