@@ -9,52 +9,71 @@ public class SaveManager : MonoBehaviour
 {
     public static SaveManager Instance { get { return instance; } }
     private static SaveManager instance;
-    private BinaryFormatter formatter;
 
-    //Feilds
-    private const string saveFileName = "data.peng";
+    private const string saveFileName = "/data.peng"; // Ensure there's a slash before the filename
+    private BinaryFormatter formatter;
     public Save SaveState;
 
     public Action<Save> OnLoad;
     public Action<Save> OnSave;
 
+    private string SaveFilePath => Application.persistentDataPath + saveFileName;
+
     private void Awake()
     {
+
+        instance = this;
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        DontDestroyOnLoad(gameObject);
+
         formatter = new BinaryFormatter();
-       // instance = this;
-        //try and load ,saved state
         Load();
     }
 
     public void Load()
     {
+        if (!File.Exists(SaveFilePath))
+        {
+            Debug.Log("No File Found, creating new save.");
+            saveGame();
+            return;
+        }
+
         try
         {
-            FileStream file = new FileStream( Application.persistentDataPath+saveFileName, FileMode.Open, FileAccess.Read);
-            SaveState = formatter.Deserialize(file) as Save;//deserialized
-            file.Close();
+            using (FileStream file = new FileStream(SaveFilePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                SaveState = formatter.Deserialize(file) as Save;
+            }
             OnLoad?.Invoke(SaveState);
         }
-        catch 
+        catch (Exception e)
         {
-            Debug.Log("No File Found");
-         //   Savefile();
+            Debug.LogError($"Failed to load save file: {e.Message}");
         }
-     
     }
+
     public void saveGame()
     {
-        // If there is no previous save,then create a new one!
-        if (SaveState = null)
+        try
         {
-            SaveState = new Save();
-
+            SaveState ??= new Save();
             SaveState.LastSaveTime = DateTime.Now;
-            FileStream file = new FileStream(Application.persistentDataPath+ saveFileName, FileMode.OpenOrCreate, FileAccess.Write);
-            formatter.Serialize(file, SaveState);
-            file.Close();
+
+            using (FileStream file = new FileStream(SaveFilePath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
+            {
+                formatter.Serialize(file, SaveState);
+            }
             OnSave?.Invoke(SaveState);
         }
+        catch (Exception e)
+        {
+            Debug.LogError($"Failed to save game: {e.Message}");
+        }
     }
-
 }

@@ -42,9 +42,17 @@ public class GameStateDeath : GameState
     }
     public void ToMenu()
     {
+        if (SaveManager.Instance.SaveState.HighScore < (int)GameStats.instance.CurrentScore)
+            SaveManager.Instance.SaveState.HighScore = (int)GameStats.instance.CurrentScore;
+
+        SaveManager.Instance.SaveState.HighestFish += GameStats.Instance.CurrentFish;
+
+        SaveManager.Instance.saveGame();
         brain.ChangeSate(GetComponent<GameStateInit>());
         GameManager.Instance.motor.ResetPlayer();
+        GameManager.Instance.motor.ResetPlayer();
         GameManager.Instance.worldGeneration.ResetWorld();
+       
       
 
     }

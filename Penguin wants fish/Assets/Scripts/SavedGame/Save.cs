@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Save : MonoBehaviour
+public class Save 
 {
     public int HighScore {  get;  set; }
     public int HighestFish {  get; set; }
