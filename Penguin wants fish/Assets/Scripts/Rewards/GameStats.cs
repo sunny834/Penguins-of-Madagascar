@@ -35,7 +35,7 @@ public class GameStats : MonoBehaviour
     {
         float s=GameManager.Instance.motor.transform.position.z * DistanceModifier;
         s+=CurrentFish*PointsPerFish+60;
-        Debug.Log(s);
+        //Debug.Log(s);
         if(s>0)
         {
             Debug.Log(s +"Inside");

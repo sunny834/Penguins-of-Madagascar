@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     public GameObject[] Cameras;
 
     private GameState state;
-    private void Awake()
+    private void Start()
     {
         instance = this;
         state = gameObject.GetComponent<GameStateInit>();

@@ -25,8 +25,8 @@ public class GameStateInit :GameState
             HiScore.text = "High Score: 0";
             FishCounts.text = "Fish: 0";
         }
-        //  HiScore.text = "HighScore:" + SaveManager.Instance.SaveState.HighScore.ToString();
-        //   FishCounts.text = "Fish:" + SaveManager.Instance.SaveState.HighestFish.ToString();
+          HiScore.text = "HighScore:" + SaveManager.Instance.SaveState.HighScore.ToString();
+          FishCounts.text = "Fish:" + SaveManager.Instance.SaveState.HighestFish.ToString();
         MainMenuUI.SetActive(true);
     }
     public override void Destruct()
@@ -41,7 +41,7 @@ public class GameStateInit :GameState
     }
     public void OnClickShop()
     {
-        // brain.ChangeSate(GetComponent<GameStateShop>());
+        brain.ChangeSate(GetComponent<GameStateShop>());
         Debug.Log("Shop");
     }
 }

@@ -20,10 +20,24 @@ public class GameStateDeath : GameState
         DeathUI.SetActive(true);
         completionCircle.gameObject.SetActive(true);
         DeathTime = Time.time;
-        HiScore.text = "HighScore" + "TBD";
-        FishCount.text = "Fish" + "TBD";
-        CurrentHiScore.text = "TBD";
-        CurrentFishCatched.text ="TBD";
+
+        if (SaveManager.Instance.SaveState.HighScore < (int)GameStats.instance.CurrentScore)
+        {
+            SaveManager.Instance.SaveState.HighScore = (int)GameStats.instance.CurrentScore;
+            HiScore.color = Color.blue;
+            CurrentHiScore.color = Color.cyan;
+        }
+        else
+            HiScore.color= Color.red;
+          
+
+        SaveManager.Instance.SaveState.HighestFish += GameStats.Instance.CurrentFish;
+
+        SaveManager.Instance.saveGame();
+        HiScore.text = "HighScore" + SaveManager.Instance.SaveState.HighScore;
+        FishCount.text = "Fish" + SaveManager.Instance.SaveState.HighestFish;
+        CurrentHiScore.text = GameStats.Instance.CurrentScore.ToString("00000");
+        CurrentFishCatched.text =GameStats.instance.CurrentFish.ToString();
     }
     public override void Destruct()
     {
@@ -42,12 +56,6 @@ public class GameStateDeath : GameState
     }
     public void ToMenu()
     {
-        if (SaveManager.Instance.SaveState.HighScore < (int)GameStats.instance.CurrentScore)
-            SaveManager.Instance.SaveState.HighScore = (int)GameStats.instance.CurrentScore;
-
-        SaveManager.Instance.SaveState.HighestFish += GameStats.Instance.CurrentFish;
-
-        SaveManager.Instance.saveGame();
         brain.ChangeSate(GetComponent<GameStateInit>());
         GameManager.Instance.motor.ResetPlayer();
         GameManager.Instance.motor.ResetPlayer();
