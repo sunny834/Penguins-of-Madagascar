@@ -8,11 +8,11 @@ public class HatLogic : MonoBehaviour
     [SerializeField] private Transform hatContainer;
     private Hat[] hats;
     private List<GameObject> hatModel = new List<GameObject>();
-    private void Awake()
+    private void Start()
     {
         hats = Resources.LoadAll<Hat>("Hat");
         SpawnHats();
-        SelectHat(1);
+        SelectHat( SaveManager.Instance.SaveState.CurrentHatIndex);
 
     }
 

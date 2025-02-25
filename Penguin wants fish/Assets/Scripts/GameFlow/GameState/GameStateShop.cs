@@ -10,25 +10,28 @@ public class GameStateShop : GameState
     public TextMeshProUGUI currentHatName;   
     public HatLogic hatLogic;
     public GameObject shopUI;
+    private bool isInit=false;
 
     //shop item
     public GameObject HatPrefabs;
     public Transform hatContainer;
     private Hat[] hats;
 
-    protected override void Awake()
-    {
-        base.Awake();
-       // brain = GetComponent<GameManager>();
-        hats = Resources.LoadAll<Hat>("Hat");
-        PopularShop();
-    }
+   
     public override void Construct()
     {
         GameManager.Instance.ChangeCamera(GameManager.GameCamera.Shop);
-       
-        totalFish.text =  SaveManager.Instance.SaveState.HighestFish.ToString("000");
+        hats = Resources.LoadAll<Hat>("Hat");
         shopUI.SetActive(true);
+        if (!isInit)
+        {
+            totalFish.text = SaveManager.Instance.SaveState.HighestFish.ToString("000");
+            currentHatName.text = hats[SaveManager.Instance.SaveState.CurrentHatIndex].ItemName;
+            PopularShop();
+            isInit = true;
+        }
+        
+       
     }
     public override void Destruct()
     {
@@ -49,8 +52,17 @@ public class GameStateShop : GameState
             go.GetComponent<Button>().onClick.AddListener(()=>OnHatClick(index));
             //Thumbnail
             go.transform.GetChild(0).GetComponent<Image>().sprite=hats[index].Thumbnail;
-            //price
-            go.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = hats[index].ItemPrice.ToString();
+            if (SaveManager.Instance.SaveState.UnlockHatFlag[i] == 0)
+            {
+                //price
+                go.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = hats[index].ItemPrice.ToString();
+            }
+            else 
+            {
+                go.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "";
+            }
+
+          
             //item name
             go.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = hats[index].ItemName;
         }
@@ -58,8 +70,34 @@ public class GameStateShop : GameState
     }
     private void OnHatClick(int i)
     {
-        Debug.Log("Hat was clicked!" +  i);
-        currentHatName.text = hats[i].name;
-        hatLogic.SelectHat(i);
+        if(SaveManager.Instance.SaveState.UnlockHatFlag[i]==1)
+        {
+            SaveManager.Instance.SaveState.CurrentHatIndex = i;
+            Debug.Log("Hat was clicked!" + i);
+            currentHatName.text = hats[i].name;
+            hatLogic.SelectHat(i);
+            SaveManager.Instance.saveGame();
+        }
+        // if we don't have it, can we buy it?
+        else if (hats[i].ItemPrice<=SaveManager.Instance.SaveState.HighestFish)
+        {
+           SaveManager.Instance.SaveState.HighestFish-= hats[i].ItemPrice;
+           SaveManager.Instance.SaveState.UnlockHatFlag[i] = 1;
+           currentHatName.text= hats[i].ItemName;
+           hatLogic.SelectHat(i); 
+           totalFish.text= SaveManager.Instance.SaveState.HighestFish.ToString("000");
+           SaveManager.Instance.saveGame();
+
+           hatContainer.GetChild(i).transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "";
+
+
+        }
+        //else , no
+        else
+        {
+            Debug.Log("Not enough fish");
+        }
+
+       
     }
 }
