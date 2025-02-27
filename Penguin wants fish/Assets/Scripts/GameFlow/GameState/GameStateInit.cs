@@ -9,6 +9,7 @@ public class GameStateInit :GameState
     public GameObject MainMenuUI;
     [SerializeField] public TextMeshProUGUI HiScore;
     [SerializeField] public TextMeshProUGUI FishCounts;
+    [SerializeField] public Fire fire;
     public override void Construct()
     {
         GameManager.Instance.ChangeCamera(GameManager.GameCamera.Init);
@@ -28,14 +29,17 @@ public class GameStateInit :GameState
           HiScore.text = "HighScore:" + SaveManager.Instance.SaveState.HighScore.ToString();
           FishCounts.text = "Fish:" + SaveManager.Instance.SaveState.HighestFish.ToString();
         MainMenuUI.SetActive(true);
+        fire.PlayParticles();
     }
     public override void Destruct()
     {
         MainMenuUI.SetActive(false);
+        fire.StopParticles();
     }
 
     public void OnClickPlay()
     {
+        GetComponent<GameStateDeath>(). EnableRevive();
         brain.ChangeSate(GetComponent<GameStateGame>());
         GameStats.Instance.ResetSeason();
     }

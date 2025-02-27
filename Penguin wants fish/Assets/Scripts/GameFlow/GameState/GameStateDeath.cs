@@ -9,6 +9,7 @@ public class GameStateDeath : GameState
     [SerializeField] private TextMeshProUGUI FishCount;
     [SerializeField] private TextMeshProUGUI CurrentHiScore;
     [SerializeField] private TextMeshProUGUI CurrentFishCatched;
+   
     //circle field
     [SerializeField] private Image completionCircle;
     public float ReviveTime = 3.5f;
@@ -18,7 +19,7 @@ public class GameStateDeath : GameState
     {
         GameManager.Instance.motor.PauseGame();
         DeathUI.SetActive(true);
-        completionCircle.gameObject.SetActive(true);
+     
         DeathTime = Time.time;
 
         if (SaveManager.Instance.SaveState.HighScore < (int)GameStats.instance.CurrentScore)
@@ -50,9 +51,13 @@ public class GameStateDeath : GameState
         completionCircle.fillAmount = 1-ratio;
         if (ratio > 1)
         {
-            completionCircle.gameObject.SetActive(false);   
+            completionCircle.gameObject.SetActive(false);
         }
 
+    }
+    public void EnableRevive()
+    {
+        completionCircle.gameObject.SetActive(true);
     }
     public void ToMenu()
     {
@@ -66,9 +71,11 @@ public class GameStateDeath : GameState
     }
     public void ResumeGame()
     {
+        completionCircle.gameObject.SetActive(false);
         Debug.Log("heyyy");
         brain.ChangeSate(GetComponent<GameStateGame>());
         GameManager.Instance.motor.RespawnPlayer();
+       
     
     }
 }

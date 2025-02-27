@@ -23,13 +23,13 @@ public class SaveManager : MonoBehaviour
     {
 
         instance = this;
-        if (instance != null && instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
+        //if (instance != null && instance != this)
+        //{
+        //    Destroy(gameObject);
+        //    return;
+        //}
 
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
 
         formatter = new BinaryFormatter();
         Load();
