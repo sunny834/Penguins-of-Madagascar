@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "com.unity.ads": "4.4.2",
     "com.unity.cinemachine": "2.10.3",
     "com.unity.collab-proxy": "2.6.0",
     "com.unity.ide.rider": "3.0.31",
@@ -8,7 +7,6 @@
     "com.unity.ide.vscode": "1.2.5",
     "com.unity.inputsystem": "1.7.0",
     "com.unity.render-pipelines.universal": "14.0.11",
-    "com.unity.services.levelplay": "8.7.0",
     "com.unity.test-framework": "1.1.33",
     "com.unity.textmeshpro": "3.0.6",
     "com.unity.timeline": "1.7.6",
