@@ -9,6 +9,7 @@ public class GameStateDeath : GameState
     [SerializeField] private TextMeshProUGUI FishCount;
     [SerializeField] private TextMeshProUGUI CurrentHiScore;
     [SerializeField] private TextMeshProUGUI CurrentFishCatched;
+    [SerializeField] private AudioClip DeathSound;
    
     //circle field
     [SerializeField] private Image completionCircle;
@@ -17,6 +18,7 @@ public class GameStateDeath : GameState
 
     public override void Construct()
     {
+        AudioManager.Instance.PlaySFX(DeathSound,1f);
         GameManager.Instance.motor.PauseGame();
         DeathUI.SetActive(true);
      
@@ -25,7 +27,7 @@ public class GameStateDeath : GameState
         if (SaveManager.Instance.SaveState.HighScore < (int)GameStats.instance.CurrentScore)
         {
             SaveManager.Instance.SaveState.HighScore = (int)GameStats.instance.CurrentScore;
-            HiScore.color = Color.blue;
+            HiScore.color = Color.green;
             CurrentHiScore.color = Color.cyan;
         }
         else
@@ -35,8 +37,8 @@ public class GameStateDeath : GameState
         SaveManager.Instance.SaveState.HighestFish += GameStats.Instance.CurrentFish;
 
         SaveManager.Instance.saveGame();
-        HiScore.text = "HighScore" + SaveManager.Instance.SaveState.HighScore;
-        FishCount.text = "Fish" + SaveManager.Instance.SaveState.HighestFish;
+        HiScore.text = "HighScore " + SaveManager.Instance.SaveState.HighScore;
+        FishCount.text = "Fish " + SaveManager.Instance.SaveState.HighestFish;
         CurrentHiScore.text = GameStats.Instance.CurrentScore.ToString("00000");
         CurrentFishCatched.text =GameStats.instance.CurrentFish.ToString();
     }

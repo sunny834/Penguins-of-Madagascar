@@ -10,6 +10,7 @@ public class GameStateInit :GameState
     [SerializeField] public TextMeshProUGUI HiScore;
     [SerializeField] public TextMeshProUGUI FishCounts;
     [SerializeField] public Fire fire;
+    [SerializeField] private AudioClip menuLoopMusic;
     public override void Construct()
     {
         GameManager.Instance.ChangeCamera(GameManager.GameCamera.Init);
@@ -30,6 +31,7 @@ public class GameStateInit :GameState
           FishCounts.text = "Fish:" + SaveManager.Instance.SaveState.HighestFish.ToString();
         MainMenuUI.SetActive(true);
         fire.PlayParticles();
+        AudioManager.Instance.PlayMusicWithXFade(menuLoopMusic, 0.5f);
     }
     public override void Destruct()
     {

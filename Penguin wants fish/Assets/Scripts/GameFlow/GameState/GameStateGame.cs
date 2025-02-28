@@ -9,6 +9,7 @@ public class GameStateGame : GameState
     public GameObject GameCanvas;
     [SerializeField] public TextMeshProUGUI HiScore;
     [SerializeField] public TextMeshProUGUI FishCounts;
+    [SerializeField] private AudioClip GamePlayMusic;
     public override void Construct()
     {
         GameManager.instance.motor.ResumeGame();
@@ -18,7 +19,7 @@ public class GameStateGame : GameState
         HiScore.text = "xTBD";
         FishCounts.text = "TBD";
         GameCanvas.SetActive(true);
-
+        AudioManager.Instance.PlayMusicWithXFade(GamePlayMusic,0.5f);
       
     }
 

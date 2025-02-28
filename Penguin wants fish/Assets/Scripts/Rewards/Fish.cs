@@ -5,6 +5,7 @@ using UnityEngine;
 public class Fish : MonoBehaviour
 {
     private Animator ani;
+    //[SerializeField] private AudioClip FishSound;
 
     private void Start()
     {
@@ -27,6 +28,7 @@ public class Fish : MonoBehaviour
         // play sfx
         // trigger an animation
         ani.SetTrigger("Pickup");
+       // AudioManager.Instance.PlayMusicWithXFade(FishSound, 0.7f);
         GameStats.Instance.OnCollectFish();
     }
     public void OnShowChunk()

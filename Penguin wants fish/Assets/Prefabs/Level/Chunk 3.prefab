@@ -1605,6 +1605,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fish
       objectReference: {fileID: 0}
+    - target: {fileID: 3528686783265228646, guid: 6e66e1e5dde407349821c42088d93d70,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 7.647
+      objectReference: {fileID: 0}
     - target: {fileID: 3618396831535288864, guid: 6e66e1e5dde407349821c42088d93d70,
         type: 3}
       propertyPath: m_LocalPosition.z
@@ -1624,6 +1629,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 17.71
+      objectReference: {fileID: 0}
+    - target: {fileID: 4739423850780568189, guid: 6e66e1e5dde407349821c42088d93d70,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 7.77
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

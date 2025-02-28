@@ -38,14 +38,6 @@ public class JumpingState : BaseState
         {
             motor.ChangeState(motor.GetComponent<FallingState>());
         }
-        if (InputManager.Instance.SwipeLeft)
-        {
-            motor.ChangeLane(-1);
-        }
-
-        if (InputManager.Instance.SwipeRight)
-        {
-            motor.ChangeLane(1);
-        }
+       
     }
 }

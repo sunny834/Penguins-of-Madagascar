@@ -26,6 +26,8 @@ public class GameStats : MonoBehaviour
     private float LastScoreUpdate;
     private float UpdateScoreDelta = 0.2f;
 
+    [SerializeField] private AudioClip FishSound;
+
 
     private void Awake()
     {
@@ -52,6 +54,7 @@ public class GameStats : MonoBehaviour
 
     public void OnCollectFish()
     {
+        AudioManager.Instance.PlaySFX(FishSound, 0.7f);
         CurrentFish++;
         OnCollectionFish?.Invoke(CurrentFish);
     }

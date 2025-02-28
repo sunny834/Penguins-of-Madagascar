@@ -23,7 +23,16 @@ public class FallingState : BaseState
     }
     public override void Transition()
     {
-        if(motor.isGrounded)
+        if (InputManager.Instance.SwipeLeft)
+        {
+            motor.ChangeLane(-1);
+        }
+
+        if (InputManager.Instance.SwipeRight)
+        {
+            motor.ChangeLane(1);
+        }
+        if (motor.isGrounded)
             motor.ChangeState(GetComponent<RunningState>());
     }
 }

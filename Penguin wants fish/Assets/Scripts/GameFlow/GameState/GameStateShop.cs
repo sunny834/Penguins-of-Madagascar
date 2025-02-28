@@ -15,8 +15,15 @@ public class GameStateShop : GameState
     public GameObject HatPrefab;
     public Transform hatContainer;
 
+    //completion circle
+    public Image CollectionCircle;
+    public TextMeshProUGUI ShopItem;
+
     private Hat[] hats;
     private bool isInit = false;
+
+    private int hatCount;
+    private int UnlockedHatCount;
 
     public override void Construct()
     {
@@ -30,6 +37,7 @@ public class GameStateShop : GameState
         }
 
         shopUI.SetActive(true);
+       
 
         if (!isInit)
         {
@@ -38,6 +46,7 @@ public class GameStateShop : GameState
             PopulateShop();
             isInit = true;
         }
+        ResetShopCollection();
     }
 
     public override void Destruct()
@@ -102,13 +111,24 @@ public class GameStateShop : GameState
             TextMeshProUGUI hatPriceText = hatPrice.GetComponent<TextMeshProUGUI>();
             if (hatPriceText != null)
             {
-                Debug.Log("Save file path: " + Application.persistentDataPath);
-                hatPriceText.text = SaveManager.Instance.SaveState.UnlockHatFlag[index] == 0
-                    ? hats[index].ItemPrice.ToString()
-                    : "Owned";
+                string saveFilePath = Application.persistentDataPath + "/sunny.json"; // Adjust the file name if needed
+                Debug.Log("Save file path: " + saveFilePath);
+
+                // Update the hat price or mark it as "Owned"
+                if (SaveManager.Instance.SaveState.UnlockHatFlag[index] == 0)
+                {
+                    hatPriceText.text = hats[index].ItemPrice.ToString();
+                }
+                else
+                {
+                    hatPriceText.text = "Owned";
+                    UnlockedHatCount++; // Increment when the hat is owned
+                    Debug.Log("Unlocked Hat Count: " + UnlockedHatCount);
+                }
+            }
+
             }
         }
-    }
 
 
     private void OnHatClick(int index)
@@ -134,6 +154,8 @@ public class GameStateShop : GameState
 
             // Update price text to "Owned"
             hatContainer.GetChild(index).transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "Owned";
+            UnlockedHatCount++;
+            ResetShopCollection();
         }
         else
         {
@@ -149,5 +171,13 @@ public class GameStateShop : GameState
     private void UpdateCurrentHatName()
     {
         currentHatName.text = hats[SaveManager.Instance.SaveState.CurrentHatIndex].ItemName;
+    }
+    public void ResetShopCollection()
+    {
+        int hatCount= hats.Length-1;
+        int currentUnlockedHat = UnlockedHatCount - 1;
+
+        CollectionCircle.fillAmount = (float)currentUnlockedHat/(float)hatCount;
+        ShopItem.text =currentUnlockedHat +"/" + hatCount;
     }
 }
