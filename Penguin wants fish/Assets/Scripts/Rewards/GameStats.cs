@@ -18,15 +18,20 @@ public class GameStats : MonoBehaviour
     public int CurrentFish;
     public int PointsPerFish=4;
 
+    //Heart
+    public int TotalHeart;
+    public int CurrentHeart;
     //Action
     public Action<int> OnCollectionFish;
     public Action<float> OnScoreChange;
+    public Action<int> OnCollectHeartss;
 
     //Internal cooldown
     private float LastScoreUpdate;
     private float UpdateScoreDelta = 0.2f;
 
-    [SerializeField] private AudioClip FishSound;
+    [SerializeField] private AudioClip FishSound; 
+    [SerializeField] private AudioClip HeartCollected;
 
 
     private void Awake()
@@ -40,7 +45,7 @@ public class GameStats : MonoBehaviour
         //Debug.Log(s);
         if(s>0)
         {
-            Debug.Log(s +"Inside");
+           // Debug.Log(s +"Inside");
             CurrentScore=s;
             if(Time.time-LastScoreUpdate>UpdateScoreDelta)
             {
@@ -57,6 +62,13 @@ public class GameStats : MonoBehaviour
         AudioManager.Instance.PlaySFX(FishSound, 0.7f);
         CurrentFish++;
         OnCollectionFish?.Invoke(CurrentFish);
+    }
+
+    public void OnCollectHeart()
+    {
+        AudioManager.Instance.PlaySFX(HeartCollected, 0.7f);
+        CurrentHeart++;
+        OnCollectHeartss?.Invoke(CurrentHeart);
     }
 
     public void ResetSeason()

@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class RunningState : BaseState
 {
+    
     public override void Construct()
     {
         motor.verticalVelocity = 0;
-    }
+        
+
+    }    
+    
     public override Vector3 ProcessMotion()
     {
         Vector3 motion = Vector3.zero;

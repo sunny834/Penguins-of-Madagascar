@@ -8,7 +8,8 @@ public class GameStateDeath : GameState
     [SerializeField] private TextMeshProUGUI HiScore;
     [SerializeField] private TextMeshProUGUI FishCount;
     [SerializeField] private TextMeshProUGUI CurrentHiScore;
-    [SerializeField] private TextMeshProUGUI CurrentFishCatched;
+    [SerializeField] private TextMeshProUGUI CurrentFishCatched; 
+    [SerializeField] private TextMeshProUGUI CurrentHeartCollected;
     [SerializeField] private AudioClip DeathSound;
    
     //circle field
@@ -35,12 +36,16 @@ public class GameStateDeath : GameState
           
 
         SaveManager.Instance.SaveState.HighestFish += GameStats.Instance.CurrentFish;
+        SaveManager.Instance.SaveState.TotalHearts += GameStats.Instance.CurrentHeart;
 
         SaveManager.Instance.saveGame();
         HiScore.text = "HighScore " + SaveManager.Instance.SaveState.HighScore;
         FishCount.text = "Fish " + SaveManager.Instance.SaveState.HighestFish;
+        CurrentHeartCollected.text ="Heart"+ SaveManager.Instance.SaveState.TotalHearts;
         CurrentHiScore.text = GameStats.Instance.CurrentScore.ToString("00000");
         CurrentFishCatched.text =GameStats.instance.CurrentFish.ToString();
+        CurrentHeartCollected.text= GameStats.instance.CurrentHeart.ToString();
+        
     }
     public override void Destruct()
     {
@@ -67,17 +72,26 @@ public class GameStateDeath : GameState
         GameManager.Instance.motor.ResetPlayer();
         GameManager.Instance.motor.ResetPlayer();
         GameManager.Instance.worldGeneration.ResetWorld();
+        GameManager.Instance.sceneGeneration.ResetWorld();
        
       
 
     }
     public void ResumeGame()
     {
-        completionCircle.gameObject.SetActive(false);
-        Debug.Log("heyyy");
-        brain.ChangeSate(GetComponent<GameStateGame>());
-        GameManager.Instance.motor.RespawnPlayer();
-       
+        if (SaveManager.Instance.SaveState.TotalHearts >= 1)
+        {
+            SaveManager.Instance.SaveState.TotalHearts -= 1;
+            completionCircle.gameObject.SetActive(false);
+            Debug.Log("heyyy");
+            brain.ChangeSate(GetComponent<GameStateGame>());
+            GameManager.Instance.motor.RespawnPlayer();
+        }
+        else
+        {
+            Debug.Log("heyyylooooo");
+            completionCircle.gameObject.SetActive(false);
+        }
     
     }
 }

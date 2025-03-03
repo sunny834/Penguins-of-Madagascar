@@ -12,9 +12,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Heart
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ec72ad1754bc562488968dfae90da937, type: 3}
+      propertyPath: m_TagString
+      value: Fish
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ec72ad1754bc562488968dfae90da937, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: ec72ad1754bc562488968dfae90da937, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.7692308
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ec72ad1754bc562488968dfae90da937, type: 3}
       propertyPath: m_LocalPosition.x
@@ -64,6 +72,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: -9085745196170315164}
+    - targetCorrespondingSourceObject: {fileID: 100000, guid: ec72ad1754bc562488968dfae90da937,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4040973681852931294}
   m_SourcePrefab: {fileID: 100100000, guid: ec72ad1754bc562488968dfae90da937, type: 3}
 --- !u!1 &3180829740133545993 stripped
 GameObject:
@@ -86,9 +98,21 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.70877093, y: 0.69426495, z: 0.36022493}
-  m_Center: {x: -0.00039200485, y: 0.346111, z: -0.036422}
+  m_Size: {x: 4.14, y: 1.56, z: 1.75}
+  m_Center: {x: -0.2919618, y: 0.40238705, z: -0.0049450384}
+--- !u!114 &4040973681852931294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3180829740133545993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bcc20490dd400d469330b5328e4c0ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -26,9 +26,31 @@ public class GameManager : MonoBehaviour
         state = gameObject.GetComponent<GameStateInit>();
         state.Construct();
     }
+    private void IncrementSpeed()
+    {
+        if (GameStats.Instance.CurrentScore >= 300)
+        {
+            GameManager.instance.motor.baseRunSpeed = 10f;
+            //Debug.Log(GameManager.instance.motor.baseRunSpeed);
+
+        }
+        else if (GameStats.Instance.CurrentScore >= 1000)
+        {
+            GameManager.instance.motor.baseRunSpeed = 11f;
+        }
+        else
+        {
+            GameManager.instance.motor.baseRunSpeed = 8f;
+        }
+    }
     private void Update()
     {
         state.UpdateState();
+       
+    }
+    private void LateUpdate()
+    {
+        IncrementSpeed();
     }
     public void ChangeSate(GameState s)
     {

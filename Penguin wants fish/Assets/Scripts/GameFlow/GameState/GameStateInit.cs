@@ -9,6 +9,7 @@ public class GameStateInit :GameState
     public GameObject MainMenuUI;
     [SerializeField] public TextMeshProUGUI HiScore;
     [SerializeField] public TextMeshProUGUI FishCounts;
+    [SerializeField] public TextMeshProUGUI HeartCounts;
     [SerializeField] public Fire fire;
     [SerializeField] private AudioClip menuLoopMusic;
     public override void Construct()
@@ -20,18 +21,23 @@ public class GameStateInit :GameState
         {
             HiScore.text = "High Score: " + saveState.HighScore.ToString();
             FishCounts.text = "Fish: " + saveState.HighestFish.ToString();
+            HeartCounts.text = "Heart: " + saveState.TotalHearts.ToString();
+            
         }
         else
         {
             Debug.LogWarning("Save data is null. Initializing defaults.");
             HiScore.text = "High Score: 0";
             FishCounts.text = "Fish: 0";
+            HeartCounts.text = "Hearts: 0";
+            
         }
           HiScore.text = "HighScore:" + SaveManager.Instance.SaveState.HighScore.ToString();
           FishCounts.text = "Fish:" + SaveManager.Instance.SaveState.HighestFish.ToString();
-        MainMenuUI.SetActive(true);
-        fire.PlayParticles();
-        AudioManager.Instance.PlayMusicWithXFade(menuLoopMusic, 0.5f);
+          HeartCounts.text= "Heart:" + SaveManager.Instance.SaveState.TotalHearts.ToString();
+          MainMenuUI.SetActive(true);
+          fire.PlayParticles();
+          AudioManager.Instance.PlayMusicWithXFade(menuLoopMusic, 0.5f);
     }
     public override void Destruct()
     {
