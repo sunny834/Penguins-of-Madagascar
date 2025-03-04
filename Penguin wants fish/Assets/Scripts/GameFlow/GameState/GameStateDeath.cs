@@ -79,7 +79,7 @@ public class GameStateDeath : GameState
     }
     public void ResumeGame()
     {
-        if (SaveManager.Instance.SaveState.TotalHearts >= 1)
+        if (SaveManager.Instance.SaveState.TotalHearts >= 1 || GameStats.Instance.CurrentHeart>=1)
         {
             SaveManager.Instance.SaveState.TotalHearts -= 1;
             completionCircle.gameObject.SetActive(false);

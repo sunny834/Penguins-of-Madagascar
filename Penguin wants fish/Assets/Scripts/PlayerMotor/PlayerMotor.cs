@@ -52,11 +52,13 @@ public class PlayerMotor : MonoBehaviour
         // Apply movement based on the state
         moveVector = state.ProcessMotion();
 
+        // Handle state transitions
+        state.Transition();
+
         // Smoothly move towards the lane position
         moveVector.x = SnapToLane();
 
-        // Handle state transitions
-        state.Transition();
+       
 
         // Update animator
         ani?.SetBool("IsGrounded", isGrounded);
@@ -92,7 +94,7 @@ public class PlayerMotor : MonoBehaviour
 
     public void ChangeLane(int direction)
     {
-        currentLane = Mathf.Clamp(currentLane + direction, -1, 1);
+        currentLane = Mathf.Clamp(currentLane + direction, -2, 2);
     }
 
     public void ChangeState(BaseState s)

@@ -33,7 +33,17 @@ public class JumpingState : BaseState
 
     public override void Transition()
     {
-        // Switch to FallingState when velocity is negative
+
+        if (InputManager.Instance.SwipeLeft)
+        {
+            motor.ChangeLane(-1);
+        }
+
+        if (InputManager.Instance.SwipeRight)
+        {
+            motor.ChangeLane(1);
+        }
+            // Switch to FallingState when velocity is negative
         if (motor.verticalVelocity < 0)
         {
             motor.ChangeState(motor.GetComponent<FallingState>());

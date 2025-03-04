@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b73672dd788e3914bb67e95f80e04477, type: 3}
+  m_Name: Pizza 6
+  m_EditorClassIdentifier: 
+  ItemName: Choco Bar
+  ItemPrice: 1499
+  Thumbnail: {fileID: 21300000, guid: f704e21a979e178428f255f8c4cb884a, type: 3}
+  Model: {fileID: 5305713196491597984, guid: fbf6814fd0d204440ab42c5d21ce612d, type: 3}

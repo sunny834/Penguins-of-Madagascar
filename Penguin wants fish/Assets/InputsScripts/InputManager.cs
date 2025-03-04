@@ -1,113 +1,107 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
     private static InputManager instance;
-    public static InputManager Instance { get { return instance; } }
+    public static InputManager Instance => instance;
 
-
-    //Action schemes
+    // Action schemes
     private RunnerControl actionScheme;
 
-    //Configuration
-    [SerializeField] private float sqrSwipeDeadzone =50.0f;
-    #region Pubilc properties
-    public bool Tap { get { return tap; } }
-    public Vector2 TouchPosition { get { return touchPosition; } }
-    public bool SwipeRight {  get { return swipeRight; } }
-    public bool SwipeLeft {  get { return swipeLeft; } }
-    public bool SwipeUp {  get { return swipeUp; } }
-    public bool SwipeDown {  get { return swipeDown; } }
+    // Configuration
+    [SerializeField] private float sqrSwipeDeadzone = 50.0f;
 
+    #region Public properties
+    public bool Tap { get; private set; }
+    public Vector2 TouchPosition { get; private set; }
+    public bool SwipeRight { get; private set; }
+    public bool SwipeLeft { get; private set; }
+    public bool SwipeUp { get; private set; }
+    public bool SwipeDown { get; private set; }
     #endregion
 
     #region Private properties
-    private bool tap;
-    private Vector2 touchPosition;
     private Vector2 startDrag;
-    private bool swipeLeft;
-    private bool swipeRight;
-    private bool swipeUp;
-    private bool swipeDown;
     #endregion
+
     private void Awake()
     {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject); // Ensure singleton pattern
+            return;
+        }
+
         instance = this;
         DontDestroyOnLoad(gameObject);
         SetupControl();
     }
+
     private void LateUpdate()
     {
         ResetInputs();
     }
+
     private void ResetInputs()
     {
-       tap= swipeDown=swipeUp=swipeLeft=swipeRight=false;
+        Tap = SwipeDown = SwipeUp = SwipeLeft = SwipeRight = false;
     }
+
     private void SetupControl()
     {
         actionScheme = new RunnerControl();
 
-        actionScheme.Gameplay.Tap.performed += ctx => OnTap(ctx);
-        actionScheme.Gameplay.TouchPosition.performed += ctx => OnPosition(ctx);
-        actionScheme.Gameplay.StartDrag.performed += ctx => OnStartDrag(ctx);
-        actionScheme.Gameplay.EndDrag.performed += ctx => OnEndDrag(ctx);
+        actionScheme.Gameplay.Tap.performed += OnTap;
+        actionScheme.Gameplay.TouchPosition.performed += OnPosition;
+        actionScheme.Gameplay.StartDrag.performed += OnStartDrag;
+        actionScheme.Gameplay.EndDrag.performed += OnEndDrag;
     }
 
     private void OnEndDrag(InputAction.CallbackContext ctx)
     {
+        Vector2 delta = TouchPosition - startDrag;
+        float sqrDistance = delta.sqrMagnitude;
 
-        Vector2 delta =touchPosition - startDrag;
-        float sqrDisatance = delta.sqrMagnitude;
-        // confirmed swipe
-        if (sqrDisatance > sqrSwipeDeadzone)
+        if (sqrDistance > sqrSwipeDeadzone)
         {
-            float x=Mathf.Abs(delta.x);
-            float y= Mathf.Abs(delta.y);
-            if (x > y)// left or right
+            if (Mathf.Abs(delta.x) > Mathf.Abs(delta.y))
             {
-                if(delta.x > 0)
-                    swipeRight = true;
-                else 
-                    swipeLeft = true;
+                SwipeRight = delta.x > 0;
+                SwipeLeft = delta.x < 0;
             }
-            else //up or down
+            else
             {
-                if (delta.y > 0)
-                    swipeUp = true;
-                else 
-                    swipeDown = true;
+                SwipeUp = delta.y > 0;
+                SwipeDown = delta.y < 0;
             }
         }
-        startDrag=Vector2.zero;
+        startDrag = Vector2.zero;
     }
 
     private void OnStartDrag(InputAction.CallbackContext ctx)
     {
-        startDrag = touchPosition;
+        startDrag = TouchPosition;
     }
 
     private void OnPosition(InputAction.CallbackContext ctx)
     {
-        touchPosition = ctx.ReadValue<Vector2>();
+        TouchPosition = ctx.ReadValue<Vector2>();
     }
 
     private void OnTap(InputAction.CallbackContext ctx)
     {
-        tap =true;
+        Tap = true;
     }
 
-    public void OnEnable()
+    private void OnEnable()
     {
-        actionScheme.Enable();
+        actionScheme?.Enable();
     }
-    public void OnDisable()
+
+    private void OnDisable()
     {
-        actionScheme.Disable();
+        actionScheme?.Disable();
     }
 }
