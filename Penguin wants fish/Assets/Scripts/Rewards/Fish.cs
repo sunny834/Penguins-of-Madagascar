@@ -16,7 +16,7 @@ public class Fish : MonoBehaviour
         if (other.tag == "Player")
         {
             PickupFish();
-            Debug.Log("Collided with fish +1");
+            //Debug.Log("Collided with fish +1");
         }
         else
             Debug.Log("no");

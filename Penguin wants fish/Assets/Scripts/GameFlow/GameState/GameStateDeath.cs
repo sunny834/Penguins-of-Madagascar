@@ -36,7 +36,7 @@ public class GameStateDeath : GameState
           
 
         SaveManager.Instance.SaveState.HighestFish += GameStats.Instance.CurrentFish;
-        SaveManager.Instance.SaveState.TotalHearts += GameStats.Instance.CurrentHeart;
+       
 
         SaveManager.Instance.saveGame();
         HiScore.text = "HighScore " + SaveManager.Instance.SaveState.HighScore;

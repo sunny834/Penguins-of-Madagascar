@@ -11,8 +11,12 @@ public class GameStateGame : GameState
     [SerializeField] public TextMeshProUGUI FishCounts;
     [SerializeField] public TextMeshProUGUI HeartCounts;
     [SerializeField] private AudioClip GamePlayMusic;
+    public int TotalheartCollect;
     public override void Construct()
     {
+        //var saveState = SaveManager.Instance?.SaveState;
+        //TotalheartCollect = SaveManager.Instance.SaveState.TotalHearts;
+       // HeartCounts.text = TotalheartCollect.ToString("00");
         GameManager.instance.motor.ResumeGame();
         GameManager.Instance.ChangeCamera(GameManager.GameCamera.Game);
         GameStats.Instance.OnCollectionFish += OnCollectFish;
@@ -20,11 +24,12 @@ public class GameStateGame : GameState
         GameStats.Instance.OnCollectHeartss += OnCollectHeartss;
         HiScore.text = "xTBD";
         FishCounts.text = "TBD";
-        HeartCounts.text = "0";
+        //HeartCounts.text = "0";
         GameCanvas.SetActive(true);
         AudioManager.Instance.PlayMusicWithXFade(GamePlayMusic,0.5f);
       
-      
+
+
     }
 
     private void OnScore(float Score)
@@ -38,7 +43,9 @@ public class GameStateGame : GameState
     }
     private void OnCollectHeartss(int TotalHeartCollected)
     {
-        HeartCounts.text = TotalHeartCollected.ToString("00");
+        SaveManager.Instance.SaveState.TotalHearts += 1;
+        Debug.Log(TotalheartCollect);
+        HeartCounts.text = SaveManager.Instance.SaveState.TotalHearts.ToString("00");
     }
     public override void Destruct()
     {
