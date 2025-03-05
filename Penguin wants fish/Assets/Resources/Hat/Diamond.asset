@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b73672dd788e3914bb67e95f80e04477, type: 3}
-  m_Name: 2_Hat
+  m_Name: Diamond
   m_EditorClassIdentifier: 
-  ItemName: Horn
+  ItemName: Rice Hat
   ItemPrice: 500
-  Thumbnail: {fileID: 21300000, guid: cba15b3a2533ec84990ffc42bf62cbcf, type: 3}
-  Model: {fileID: 100000, guid: 307f4aff9d761194ea558fc88d9d3b79, type: 3}
+  Thumbnail: {fileID: 21300000, guid: e18dd9ff5e1a8a7459bbd8fb92491ec5, type: 3}
+  Model: {fileID: 3840301498062528504, guid: a6dbd11ff4a5b5746a543c6cbdbbf520, type: 3}

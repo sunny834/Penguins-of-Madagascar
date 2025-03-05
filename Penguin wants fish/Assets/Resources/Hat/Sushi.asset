@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b73672dd788e3914bb67e95f80e04477, type: 3}
-  m_Name: Pizza 4
+  m_Name: Sushi
   m_EditorClassIdentifier: 
-  ItemName: Donut
-  ItemPrice: 1999
-  Thumbnail: {fileID: 21300000, guid: 916b639c93830a7408995871ddb94d4c, type: 3}
-  Model: {fileID: 6974863519776962998, guid: 541d9093cad6d0945b37231b698e1f96, type: 3}
+  ItemName: Sushi
+  ItemPrice: 1000
+  Thumbnail: {fileID: 21300000, guid: bf8f57f8339e388408f92945182f2046, type: 3}
+  Model: {fileID: 1955214082361349810, guid: 55aaf3d376031ef4e87d0c9e40e04a08, type: 3}

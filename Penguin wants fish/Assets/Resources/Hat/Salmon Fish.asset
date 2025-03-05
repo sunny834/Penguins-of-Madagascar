@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b73672dd788e3914bb67e95f80e04477, type: 3}
-  m_Name: Pizza 2
+  m_Name: Salmon Fish
   m_EditorClassIdentifier: 
-  ItemName: Coffee
-  ItemPrice: 199
-  Thumbnail: {fileID: 21300000, guid: 150e890507a86f14e9b6a4cf468a4748, type: 3}
-  Model: {fileID: 1598737658758947845, guid: 9618ee5198d5bc14690b61b995f89590, type: 3}
+  ItemName: salmon fish
+  ItemPrice: 200
+  Thumbnail: {fileID: 21300000, guid: e7f3158c806fee14d96c042b05fd2085, type: 3}
+  Model: {fileID: 5296646555204626939, guid: 685c0fc5fa8b9c04ca226db350611cc7, type: 3}

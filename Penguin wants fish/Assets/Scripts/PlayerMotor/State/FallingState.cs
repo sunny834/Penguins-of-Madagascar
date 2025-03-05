@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class FallingState : BaseState
 {
+    
     public override void Construct()
     {
         motor.ani?.SetTrigger("Fall");
-       
     }
+   
     public override Vector3 ProcessMotion()
     {
         //Apply gravity
@@ -31,6 +32,11 @@ public class FallingState : BaseState
         if (InputManager.Instance.SwipeRight)
         {
             motor.ChangeLane(1);
+        }
+        if (InputManager.Instance.SwipeDown)
+        {
+            motor.Downwardforce();
+            Debug.Log("Called");
         }
         if (motor.isGrounded)
             motor.ChangeState(GetComponent<RunningState>());

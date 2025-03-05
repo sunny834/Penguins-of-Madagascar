@@ -24,6 +24,11 @@ public class RunningState : BaseState
 
     public override void Transition()
     {
+        if (InputManager.Instance.SwipeUp && motor.isGrounded)
+        {
+            Debug.Log("Now jump");
+            motor.ChangeState(GetComponent<JumpingState>());
+        }
         if (InputManager.Instance.SwipeLeft)
         {
             motor.ChangeLane(-1);
@@ -33,10 +38,7 @@ public class RunningState : BaseState
         {
             motor.ChangeLane(1);
         }
-        if (InputManager.Instance.SwipeUp && motor.isGrounded)
-        {
-             motor.ChangeState(GetComponent<JumpingState>());
-        }
+        
         if (!motor.isGrounded)
         {
             motor.ChangeState(GetComponent<FallingState>());

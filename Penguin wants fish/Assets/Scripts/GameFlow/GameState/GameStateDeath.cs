@@ -82,7 +82,7 @@ public class GameStateDeath : GameState
         if (SaveManager.Instance.SaveState.TotalHearts >= 1 || GameStats.Instance.CurrentHeart>=1)
         {
             SaveManager.Instance.SaveState.TotalHearts -= 1;
-            completionCircle.gameObject.SetActive(false);
+           // completionCircle.gameObject.SetActive(false);
             Debug.Log("heyyy");
             brain.ChangeSate(GetComponent<GameStateGame>());
             GameManager.Instance.motor.RespawnPlayer();

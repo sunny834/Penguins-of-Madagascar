@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b73672dd788e3914bb67e95f80e04477, type: 3}
-  m_Name: 5_Hat
+  m_Name: Coca Cola
   m_EditorClassIdentifier: 
-  ItemName: Udon
-  ItemPrice: 20
-  Thumbnail: {fileID: 21300000, guid: 1e7bbbc7f4986a34a84141cf6ca9d860, type: 3}
-  Model: {fileID: 8575389795609162483, guid: 72f7713924360c14295e85883d1da829, type: 3}
+  ItemName: Coco Cola
+  ItemPrice: 2000
+  Thumbnail: {fileID: 21300000, guid: d68f7576f257093438e8ca32946ae1af, type: 3}
+  Model: {fileID: 8835592703282879395, guid: 0b6e65f0fca42c647855eb8962efa3df, type: 3}

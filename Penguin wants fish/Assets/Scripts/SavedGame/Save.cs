@@ -6,7 +6,7 @@ using UnityEngine;
 [System.Serializable]
 public class Save 
 {
-    [NonSerialized]private const int HAT_COUNT = 16;
+    [NonSerialized]private const int HAT_COUNT = 32;
     public int HighScore {  get;  set; }
     public int HighestFish {  get; set; }
 

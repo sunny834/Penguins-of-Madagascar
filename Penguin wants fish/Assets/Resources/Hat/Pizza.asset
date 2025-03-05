@@ -15,4 +15,4 @@ MonoBehaviour:
   ItemName: Pizza
   ItemPrice: 1500
   Thumbnail: {fileID: 21300000, guid: cb825c9cad1b87d4a976e21c67346605, type: 3}
-  Model: {fileID: 8613595652805400546, guid: 0e9ff68fb45f20d4f8b24f1622ce7ad7, type: 3}
+  Model: {fileID: 8613595652805400546, guid: b4ef73c1e6c789b478fde8485d34220b, type: 3}

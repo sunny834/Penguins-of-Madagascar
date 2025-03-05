@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b73672dd788e3914bb67e95f80e04477, type: 3}
-  m_Name: Pizza 6
+  m_Name: Peach
   m_EditorClassIdentifier: 
-  ItemName: Choco Bar
-  ItemPrice: 1499
-  Thumbnail: {fileID: 21300000, guid: f704e21a979e178428f255f8c4cb884a, type: 3}
-  Model: {fileID: 5305713196491597984, guid: fbf6814fd0d204440ab42c5d21ce612d, type: 3}
+  ItemName: Curry Chawal
+  ItemPrice: 5000
+  Thumbnail: {fileID: 21300000, guid: 5f5d2e37f2dcb4840bdc31fe283ba78d, type: 3}
+  Model: {fileID: 7131742819465607716, guid: ef62557891c72774580b5ddab4813f20, type: 3}

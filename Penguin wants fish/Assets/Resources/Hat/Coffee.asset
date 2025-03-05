@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b73672dd788e3914bb67e95f80e04477, type: 3}
-  m_Name: Pizza 11
+  m_Name: Coffee
   m_EditorClassIdentifier: 
-  ItemName: 'Lamb Leg '
-  ItemPrice: 1799
-  Thumbnail: {fileID: 21300000, guid: c5bf46fd3dc21ae42adfba2131ed495c, type: 3}
-  Model: {fileID: 1011158907165738732, guid: 41ffe1a739b405340b5067d816dda9b3, type: 3}
+  ItemName: Coffee
+  ItemPrice: 199
+  Thumbnail: {fileID: 21300000, guid: 150e890507a86f14e9b6a4cf468a4748, type: 3}
+  Model: {fileID: 1598737658758947845, guid: 9618ee5198d5bc14690b61b995f89590, type: 3}

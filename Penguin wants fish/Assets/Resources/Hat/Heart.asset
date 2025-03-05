@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b73672dd788e3914bb67e95f80e04477, type: 3}
-  m_Name: Pizza 7
+  m_Name: Heart
   m_EditorClassIdentifier: 
-  ItemName: Sushi
-  ItemPrice: 1000
-  Thumbnail: {fileID: 21300000, guid: bf8f57f8339e388408f92945182f2046, type: 3}
-  Model: {fileID: 1955214082361349810, guid: 55aaf3d376031ef4e87d0c9e40e04a08, type: 3}
+  ItemName: Devil Skin
+  ItemPrice: 100
+  Thumbnail: {fileID: 21300000, guid: 0001e3c4670c77b4ab883a85791333da, type: 3}
+  Model: {fileID: 100000, guid: ec72ad1754bc562488968dfae90da937, type: 3}

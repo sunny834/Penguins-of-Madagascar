@@ -21,6 +21,9 @@ public class PlayerMotor : MonoBehaviour
     private BaseState state;
     private bool isPaused = true;
 
+    public float DownwardForce = -7.0f;
+    private float DownStartTime;
+
     private void Start()
     {
         controller = GetComponent<CharacterController>();
@@ -66,6 +69,12 @@ public class PlayerMotor : MonoBehaviour
 
         // Move the player
         controller.Move(moveVector * Time.deltaTime);
+    }
+    public void Downwardforce()
+    {
+        
+        verticalVelocity = DownwardForce;
+        Debug.Log("Called2");
     }
 
     public float SnapToLane()
@@ -123,6 +132,10 @@ public class PlayerMotor : MonoBehaviour
         verticalVelocity = Mathf.Clamp(verticalVelocity, -terminalVelocity, terminalVelocity);
     }
 
+    //public Vector3 ApplyDownwardForce(float gravity, float deltaTime)
+    //{
+    //    return new Vector3(0, -gravity * deltaTime, 0);
+    //}
     public void PauseGame()
     {
         isPaused = true;

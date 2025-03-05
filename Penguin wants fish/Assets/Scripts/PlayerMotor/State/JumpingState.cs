@@ -43,11 +43,16 @@ public class JumpingState : BaseState
         {
             motor.ChangeLane(1);
         }
+        if (InputManager.Instance.SwipeDown)
+        {
+            motor.Downwardforce();
+        }
             // Switch to FallingState when velocity is negative
         if (motor.verticalVelocity < 0)
         {
             motor.ChangeState(motor.GetComponent<FallingState>());
         }
        
+
     }
 }
