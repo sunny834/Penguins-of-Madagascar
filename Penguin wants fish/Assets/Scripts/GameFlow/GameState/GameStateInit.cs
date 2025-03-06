@@ -12,6 +12,7 @@ public class GameStateInit :GameState
     [SerializeField] public TextMeshProUGUI HeartCounts;
     [SerializeField] public Fire fire;
     [SerializeField] private AudioClip menuLoopMusic;
+    public EnemyAI enemyAI;
     public override void Construct()
     {
         GameManager.Instance.ChangeCamera(GameManager.GameCamera.Init);
@@ -47,6 +48,7 @@ public class GameStateInit :GameState
 
     public void OnClickPlay()
     {
+        enemyAI.Play();
         GetComponent<GameStateDeath>(). EnableRevive();
         brain.ChangeSate(GetComponent<GameStateGame>());
         GameStats.Instance.ResetSeason();

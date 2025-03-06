@@ -1696,6 +1696,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 4381487791147450932, guid: 123a7196162daf048a60d6d4a0a2329c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1839,6 +1844,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8508397344690216669, guid: 234afea0ccea61b4cb060fbb56b60c7c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8508397344690307837, guid: 234afea0ccea61b4cb060fbb56b60c7c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1975,6 +1985,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Collectables (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4256450900364065462, guid: 1f897276695b1e2458d1ab24e613d158,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2178,6 +2193,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RampWood
+      objectReference: {fileID: 0}
+    - target: {fileID: 5305307031534513248, guid: 47c26f98a8bcf8e4997b3b9fb507eb2c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

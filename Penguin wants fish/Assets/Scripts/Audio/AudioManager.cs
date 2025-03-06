@@ -49,6 +49,26 @@ public class AudioManager : MonoBehaviour
         newSource.Play();
         StartCoroutine(UpdateMusicWithXFade(activeSource, newSource, musicClip, transitionTime));
     }
+    public void muteSong()
+    {
+        music2.mute = true;
+    }
+    public void ResumeAudio()
+    {
+        music2.UnPause();
+    }
+    public void pause()
+    {
+        music2.Pause();
+    }
+    public void UnmuteAudio()
+    {
+        music2.UnPause();
+    }
+    public void StopAudio()
+    {
+        music2.Stop();
+    }
     private IEnumerator UpdateMusicWithXFade(AudioSource original, AudioSource newSource, AudioClip music, float transitionTime)
     {
         // Make sure the source is active and playing

@@ -11,6 +11,7 @@ public class GameStateDeath : GameState
     [SerializeField] private TextMeshProUGUI CurrentFishCatched; 
     [SerializeField] private TextMeshProUGUI CurrentHeartCollected;
     [SerializeField] private AudioClip DeathSound;
+    public EnemyAI Enemy;
    
     //circle field
     [SerializeField] private Image completionCircle;
@@ -58,6 +59,7 @@ public class GameStateDeath : GameState
         completionCircle.fillAmount = 1-ratio;
         if (ratio > 1)
         {
+            AudioManager.Instance.StopAudio();
             completionCircle.gameObject.SetActive(false);
         }
 
@@ -65,6 +67,7 @@ public class GameStateDeath : GameState
     public void EnableRevive()
     {
         completionCircle.gameObject.SetActive(true);
+        AudioManager.Instance.pause();
     }
     public void ToMenu()
     {
@@ -73,14 +76,16 @@ public class GameStateDeath : GameState
         GameManager.Instance.motor.ResetPlayer();
         GameManager.Instance.worldGeneration.ResetWorld();
         GameManager.Instance.sceneGeneration.ResetWorld();
-       
-      
+        Enemy.ResetEnemy();
+
 
     }
     public void ResumeGame()
     {
         if (SaveManager.Instance.SaveState.TotalHearts >= 1 || GameStats.Instance.CurrentHeart>=1)
         {
+            AudioManager.Instance.ResumeAudio();
+            Enemy.ResetEnemy();
             SaveManager.Instance.SaveState.TotalHearts -= 1;
            // completionCircle.gameObject.SetActive(false);
             Debug.Log("heyyy");
@@ -91,6 +96,7 @@ public class GameStateDeath : GameState
         {
             Debug.Log("heyyylooooo");
             completionCircle.gameObject.SetActive(false);
+            
         }
     
     }

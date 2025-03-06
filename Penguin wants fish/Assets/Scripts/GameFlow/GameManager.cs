@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public WorldGeneration worldGeneration;
     public SceneGeneration sceneGeneration;
     public GameObject[] Cameras;
+    
 
     private GameState state;
     private void Start()
