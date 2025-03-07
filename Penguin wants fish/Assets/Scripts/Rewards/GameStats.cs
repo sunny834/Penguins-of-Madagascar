@@ -67,7 +67,8 @@ public class GameStats : MonoBehaviour
     public void OnCollectHeart()
     {
         AudioManager.Instance.PlaySFX(HeartCollected, 0.7f);
-        CurrentHeart++;
+        CurrentHeart=SaveManager.Instance.SaveState.TotalHearts++;
+        //CurrentHeart++;
         OnCollectHeartss?.Invoke(CurrentHeart);
     }
 

@@ -42,10 +42,10 @@ public class GameStateDeath : GameState
         SaveManager.Instance.saveGame();
         HiScore.text = "HighScore " + SaveManager.Instance.SaveState.HighScore;
         FishCount.text = "Fish " + SaveManager.Instance.SaveState.HighestFish;
-        CurrentHeartCollected.text ="Heart"+ SaveManager.Instance.SaveState.TotalHearts;
+        CurrentHeartCollected.text =""+ SaveManager.Instance.SaveState.TotalHearts;
         CurrentHiScore.text = GameStats.Instance.CurrentScore.ToString("00000");
         CurrentFishCatched.text =GameStats.instance.CurrentFish.ToString();
-        CurrentHeartCollected.text= GameStats.instance.CurrentHeart.ToString();
+      //  CurrentHeartCollected.text= GameStats.instance.TotalHeart.ToString();
         
     }
     public override void Destruct()
@@ -77,6 +77,7 @@ public class GameStateDeath : GameState
         GameManager.Instance.worldGeneration.ResetWorld();
         GameManager.Instance.sceneGeneration.ResetWorld();
         Enemy.ResetEnemy();
+       
 
 
     }
@@ -84,8 +85,9 @@ public class GameStateDeath : GameState
     {
         if (SaveManager.Instance.SaveState.TotalHearts >= 1 || GameStats.Instance.CurrentHeart>=1)
         {
+            GameStats.Instance.CurrentHeart--;
             AudioManager.Instance.ResumeAudio();
-            Enemy.ResetEnemy();
+            Enemy.Idle();
             SaveManager.Instance.SaveState.TotalHearts -= 1;
            // completionCircle.gameObject.SetActive(false);
             Debug.Log("heyyy");

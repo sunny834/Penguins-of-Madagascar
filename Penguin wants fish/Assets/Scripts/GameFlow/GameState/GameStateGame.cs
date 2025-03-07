@@ -9,14 +9,18 @@ public class GameStateGame : GameState
     public GameObject GameCanvas;
     [SerializeField] public TextMeshProUGUI HiScore;
     [SerializeField] public TextMeshProUGUI FishCounts;
-    [SerializeField] public TextMeshProUGUI HeartCounts;
+    [SerializeField] public TextMeshProUGUI HeartCounts; 
+    [SerializeField] public TextMeshProUGUI HeartCurrentCounts;
     [SerializeField] private AudioClip GamePlayMusic;
-    public int TotalheartCollect;
+    ////public int TotalheartCollect;
+    //public bool Isheartcollected=false;
+    public int Currentpick = 1;
+    public void Start()
+    {
+        HeartCounts.text = SaveManager.Instance.SaveState.TotalHearts.ToString("000");
+    }
     public override void Construct()
     {
-        //var saveState = SaveManager.Instance?.SaveState;
-        //TotalheartCollect = SaveManager.Instance.SaveState.TotalHearts;
-       // HeartCounts.text = TotalheartCollect.ToString("00");
         GameManager.instance.motor.ResumeGame();
         GameManager.Instance.ChangeCamera(GameManager.GameCamera.Game);
         GameStats.Instance.OnCollectionFish += OnCollectFish;
@@ -31,7 +35,7 @@ public class GameStateGame : GameState
 
 
     }
-
+   
     private void OnScore(float Score)
     {
         HiScore.text=Score.ToString("0000000");
@@ -43,9 +47,17 @@ public class GameStateGame : GameState
     }
     private void OnCollectHeartss(int TotalHeartCollected)
     {
-        SaveManager.Instance.SaveState.TotalHearts += 1;
-        Debug.Log(TotalheartCollect);
-        HeartCounts.text = SaveManager.Instance.SaveState.TotalHearts.ToString("00");
+         HeartCounts.gameObject.SetActive(false);
+         HeartCurrentCounts.gameObject.SetActive(true);
+         HeartCurrentCounts.text = TotalHeartCollected.ToString("000");
+         //Currentpick = SaveManager.Instance.SaveState.TotalHearts;
+        // Currentpick++;
+         //HeartCounts.text = Currentpick.ToString();
+        //SaveManager.Instance.SaveState.TotalHearts += 1;
+
+      
+      
+
     }
     public override void Destruct()
     {

@@ -63,7 +63,7 @@ public class AudioManager : MonoBehaviour
     }
     public void UnmuteAudio()
     {
-        music2.UnPause();
+        music2.mute=false;
     }
     public void StopAudio()
     {

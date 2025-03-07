@@ -30,12 +30,14 @@ public class SlidingState : BaseState
     }
     public override void Transition()
     {
-        if(InputManager.Instance.SwipeLeft)
+        if (InputManager.Instance.SwipeLeft)
         {
             motor.ChangeLane(-1);
         }
         if(InputManager.Instance.SwipeRight)
-            { motor.ChangeLane(1); }
+        { 
+            motor.ChangeLane(1); 
+        }
 
         if(!motor.isGrounded)
             motor.ChangeState(GetComponent<FallingState>());
@@ -43,9 +45,13 @@ public class SlidingState : BaseState
         {
             motor.ChangeState(GetComponent<JumpingState>());
         }
-        if(Time.time - slideStart > slideDuration)
-            motor.ChangeState(GetComponent<RunningState>());    
-       
+
+
+        if (Time.time - slideStart > slideDuration)
+        {
+            motor.ChangeState(GetComponent<RunningState>());
+        }
+
     }
     public override Vector3 ProcessMotion()
     {
