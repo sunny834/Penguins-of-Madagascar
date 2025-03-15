@@ -11351,7 +11351,7 @@ PrefabInstance:
     - target: {fileID: 6112459516107723935, guid: e0d188f57f0fc304ea064953ed338ee5,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.01
+      value: -1.04
       objectReference: {fileID: 0}
     - target: {fileID: 6112459516107723935, guid: e0d188f57f0fc304ea064953ed338ee5,
         type: 3}
@@ -11421,7 +11421,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1137579999
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16122,7 +16122,8 @@ MonoBehaviour:
   FishCounts: {fileID: 215059965}
   HeartCounts: {fileID: 23960088}
   HeartCurrentCounts: {fileID: 979959481}
-  GamePlayMusic: {fileID: 8300000, guid: f0250782b6162d2458038d1d423ed9a5, type: 3}
+  GamePlayMusic: {fileID: 8300000, guid: fa8be6a4508b8224ab6538910416a762, type: 3}
+  DeathScript: {fileID: 2048329204}
   Currentpick: 1
 --- !u!114 &2048329202
 MonoBehaviour:
@@ -16183,6 +16184,7 @@ MonoBehaviour:
   CurrentHeartCollected: {fileID: 17286015}
   DeathSound: {fileID: 8300000, guid: ea4902d622244ae42b0e7182dce98d7a, type: 3}
   Enemy: {fileID: 857574468}
+  gamestate: {fileID: 2048329201}
   completionCircle: {fileID: 624205167}
   ReviveTime: 3.5
 --- !u!114 &2048329205
@@ -16204,9 +16206,8 @@ MonoBehaviour:
   CurrentFish: 0
   PointsPerFish: 0
   TotalHeart: 0
-  CurrentHeart: 0
   FishSound: {fileID: 8300000, guid: e6ad83ea03f8a0845a9dd4527fe5c422, type: 3}
-  HeartCollected: {fileID: 8300000, guid: e6ad83ea03f8a0845a9dd4527fe5c422, type: 3}
+  HeartCollected: {fileID: 8300000, guid: d6b2a65785662984a83157c94048a8ca, type: 3}
 --- !u!114 &2048329206
 MonoBehaviour:
   m_ObjectHideFlags: 0

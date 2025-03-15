@@ -17,6 +17,7 @@ public class MusicManager : MonoBehaviour
         if(song)
         {
             AudioManager.Instance.muteSong();
+
             Mute.sprite = muteIcon;
             song = false;
         }

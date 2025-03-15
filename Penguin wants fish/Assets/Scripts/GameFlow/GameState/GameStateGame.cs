@@ -12,12 +12,16 @@ public class GameStateGame : GameState
     [SerializeField] public TextMeshProUGUI HeartCounts; 
     [SerializeField] public TextMeshProUGUI HeartCurrentCounts;
     [SerializeField] private AudioClip GamePlayMusic;
+    [SerializeField] private GameStateDeath DeathScript;
+    
     ////public int TotalheartCollect;
     //public bool Isheartcollected=false;
     public int Currentpick = 1;
     public void Start()
     {
+        HeartCurrentCounts.gameObject.SetActive(false);
         HeartCounts.text = SaveManager.Instance.SaveState.TotalHearts.ToString("000");
+
     }
     public override void Construct()
     {
@@ -26,6 +30,7 @@ public class GameStateGame : GameState
         GameStats.Instance.OnCollectionFish += OnCollectFish;
         GameStats.Instance.OnScoreChange += OnScore;
         GameStats.Instance.OnCollectHeartss += OnCollectHeartss;
+        DeathScript.OnUseHeart += Onuseheart;
         HiScore.text = "xTBD";
         FishCounts.text = "TBD";
         //HeartCounts.text = "0";
@@ -35,11 +40,30 @@ public class GameStateGame : GameState
 
 
     }
-   
+
+    private void Onuseheart(int TotalUsedHeart)
+    {
+        
+        HeartCounts.gameObject.SetActive(false);
+        if (TotalUsedHeart >= 0)
+        {
+            SaveManager.Instance.SaveState.TotalHearts = -1;
+        }
+        else
+        {
+            Debug.Log(TotalUsedHeart);
+        }
+        Debug.Log(TotalUsedHeart);
+        HeartCurrentCounts.text = TotalUsedHeart.ToString("000");
+        
+    }
+
     private void OnScore(float Score)
     {
         HiScore.text=Score.ToString("0000000");
     }
+
+    
 
     private void OnCollectFish(int TotalCollected)
     {
@@ -47,16 +71,22 @@ public class GameStateGame : GameState
     }
     private void OnCollectHeartss(int TotalHeartCollected)
     {
-         HeartCounts.gameObject.SetActive(false);
-         HeartCurrentCounts.gameObject.SetActive(true);
-         HeartCurrentCounts.text = TotalHeartCollected.ToString("000");
-         //Currentpick = SaveManager.Instance.SaveState.TotalHearts;
+          HeartCounts.gameObject.SetActive(false);
+          HeartCurrentCounts.gameObject.SetActive(true);
+          Debug.Log(TotalHeartCollected);
+          HeartCurrentCounts.text = TotalHeartCollected.ToString("000");
+         
+        //SaveManager.Instance.SaveState.TotalHearts= + 1;
+
+
+
+        //Currentpick = SaveManager.Instance.SaveState.TotalHearts;
         // Currentpick++;
-         //HeartCounts.text = Currentpick.ToString();
+        //HeartCounts.text = Currentpick.ToString();
         //SaveManager.Instance.SaveState.TotalHearts += 1;
 
-      
-      
+
+
 
     }
     public override void Destruct()
@@ -65,6 +95,7 @@ public class GameStateGame : GameState
         GameStats.Instance.OnCollectionFish -= OnCollectFish;
         GameStats.Instance.OnScoreChange -= OnScore;
         GameStats.Instance.OnCollectHeartss -= OnCollectHeartss;
+        DeathScript.OnUseHeart -= Onuseheart;
     }
     public override void UpdateState()
     {

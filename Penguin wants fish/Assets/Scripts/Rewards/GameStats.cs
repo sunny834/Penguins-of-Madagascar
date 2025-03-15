@@ -20,7 +20,7 @@ public class GameStats : MonoBehaviour
 
     //Heart
     public int TotalHeart;
-    public int CurrentHeart;
+   // public int CurrentHeart;
     //Action
     public Action<int> OnCollectionFish;
     public Action<float> OnScoreChange;
@@ -38,6 +38,10 @@ public class GameStats : MonoBehaviour
     {
         instance = this;
     }
+    //public void Start()
+    //{
+    //   // TotalHeart = SaveManager.Instance.SaveState.TotalHearts;
+    //}
     public void Update()
     {
         float s=GameManager.Instance.motor.transform.position.z * DistanceModifier;
@@ -67,9 +71,24 @@ public class GameStats : MonoBehaviour
     public void OnCollectHeart()
     {
         AudioManager.Instance.PlaySFX(HeartCollected, 0.7f);
-        CurrentHeart=SaveManager.Instance.SaveState.TotalHearts++;
+       // CurrentHeart=SaveManager.Instance.SaveState.TotalHearts+1;
+        TotalHeart++;
         //CurrentHeart++;
-        OnCollectHeartss?.Invoke(CurrentHeart);
+        OnCollectHeartss?.Invoke(TotalHeart);
+    }
+    public void OnuseHeart()
+    {
+        // CurrentHeart = SaveManager.Instance.SaveState.TotalHearts - 1;
+        if (TotalHeart == 0)
+        {
+            TotalHeart = 0;
+        }
+        else
+        {
+            TotalHeart--;
+        }
+       
+        OnCollectHeartss?.Invoke(TotalHeart);
     }
 
     public void ResetSeason()

@@ -51,6 +51,7 @@ public class AudioManager : MonoBehaviour
     }
     public void muteSong()
     {
+        music1.mute=true;
         music2.mute = true;
     }
     public void ResumeAudio()
@@ -63,7 +64,8 @@ public class AudioManager : MonoBehaviour
     }
     public void UnmuteAudio()
     {
-        music2.mute=false;
+        music1.mute=false;
+        music2.mute=false ;
     }
     public void StopAudio()
     {

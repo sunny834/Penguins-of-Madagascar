@@ -23,6 +23,7 @@ public class GameStateInit :GameState
             HiScore.text = "High Score: " + saveState.HighScore.ToString();
             FishCounts.text = "Fish: " + saveState.HighestFish.ToString();
             HeartCounts.text = "Heart: " + saveState.TotalHearts.ToString();
+            Debug.Log(saveState.TotalHearts);
             
         }
         else

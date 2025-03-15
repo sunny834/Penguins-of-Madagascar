@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,11 +13,16 @@ public class GameStateDeath : GameState
     [SerializeField] private TextMeshProUGUI CurrentHeartCollected;
     [SerializeField] private AudioClip DeathSound;
     public EnemyAI Enemy;
+    [SerializeField] private GameStateGame gamestate;
+
+    [SerializeField] private MusicManager music;
    
     //circle field
     [SerializeField] private Image completionCircle;
     public float ReviveTime = 3.5f;
     private float DeathTime;
+
+    public Action<int> OnUseHeart;
 
     public override void Construct()
     {
@@ -37,15 +43,35 @@ public class GameStateDeath : GameState
           
 
         SaveManager.Instance.SaveState.HighestFish += GameStats.Instance.CurrentFish;
+        if (GameStats.Instance.TotalHeart==0)
+        {
+            if (SaveManager.Instance.SaveState.TotalHearts == 0)
+            {
+                SaveManager.Instance.SaveState.TotalHearts = 0;
+                //Debug.Log("sunny" +
+                //SaveManager.Instance.SaveState.TotalHearts);
+            }
+            else
+            {
+                SaveManager.Instance.SaveState.TotalHearts = SaveManager.Instance.SaveState.TotalHearts;
+            }
+            
+        }
+        else
+        {
+            SaveManager.Instance.SaveState.TotalHearts = GameStats.Instance.TotalHeart;
+        }
        
+
 
         SaveManager.Instance.saveGame();
         HiScore.text = "HighScore " + SaveManager.Instance.SaveState.HighScore;
         FishCount.text = "Fish " + SaveManager.Instance.SaveState.HighestFish;
-        CurrentHeartCollected.text =""+ SaveManager.Instance.SaveState.TotalHearts;
+       // CurrentHeartCollected.text =""+GameStats.Instance.TotalHeart;
+
         CurrentHiScore.text = GameStats.Instance.CurrentScore.ToString("00000");
         CurrentFishCatched.text =GameStats.instance.CurrentFish.ToString();
-      //  CurrentHeartCollected.text= GameStats.instance.TotalHeart.ToString();
+        CurrentHeartCollected.text= SaveManager.Instance.SaveState.TotalHearts.ToString();
         
     }
     public override void Destruct()
@@ -77,28 +103,66 @@ public class GameStateDeath : GameState
         GameManager.Instance.worldGeneration.ResetWorld();
         GameManager.Instance.sceneGeneration.ResetWorld();
         Enemy.ResetEnemy();
+        gamestate.HeartCounts.gameObject.SetActive(true );
+        
+
        
 
 
     }
     public void ResumeGame()
     {
-        if (SaveManager.Instance.SaveState.TotalHearts >= 1 || GameStats.Instance.CurrentHeart>=1)
+        if (GameStats.Instance.TotalHeart>= 1|| SaveManager.Instance.SaveState.TotalHearts>=1)
         {
-            GameStats.Instance.CurrentHeart--;
-            AudioManager.Instance.ResumeAudio();
-            Enemy.Idle();
-            SaveManager.Instance.SaveState.TotalHearts -= 1;
-           // completionCircle.gameObject.SetActive(false);
-            Debug.Log("heyyy");
-            brain.ChangeSate(GetComponent<GameStateGame>());
-            GameManager.Instance.motor.RespawnPlayer();
+           
+            if (SaveManager.Instance.SaveState.TotalHearts ==1)
+            {
+                
+                //GameStats.Instance.TotalHeart--;
+                OnUseHeart?.Invoke(GameStats.Instance.TotalHeart);
+                if (music.song)
+                {
+                    AudioManager.Instance.ResumeAudio();
+                }
+                else
+                {
+                    AudioManager.Instance.StopAudio();
+                }
+                Enemy.Idle();
+
+                // completionCircle.gameObject.SetActive(false);
+                Debug.Log("heyyy");
+                brain.ChangeSate(GetComponent<GameStateGame>());
+                GameManager.Instance.motor.RespawnPlayer();
+                GameStats.Instance.OnuseHeart();
+                SaveManager.Instance.SaveState.TotalHearts = 0;
+                
+
+            }
+            else
+            {
+                SaveManager.Instance.SaveState.TotalHearts -= 1;
+                //GameStats.Instance.TotalHeart--;
+                OnUseHeart?.Invoke(GameStats.Instance.TotalHeart);
+                AudioManager.Instance.ResumeAudio();
+                Enemy.Idle();
+
+                // completionCircle.gameObject.SetActive(false);
+                Debug.Log("heyyy");
+                brain.ChangeSate(GetComponent<GameStateGame>());
+                GameManager.Instance.motor.RespawnPlayer();
+                GameStats.Instance.OnuseHeart();
+
+            }
+           
+           
         }
         else
         {
             Debug.Log("heyyylooooo");
             completionCircle.gameObject.SetActive(false);
-            
+           // gamestate.HeartCounts.gameObject.SetActive(true);
+
         }
     
     }

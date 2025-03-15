@@ -1,39 +1,72 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Heart : MonoBehaviour
 {
     private Animator ani;
-    //[SerializeField] private AudioClip FishSound;
 
     private void Start()
     {
         ani = GetComponentInParent<Animator>();
+
+        if (ani == null)
+        {
+            Debug.LogWarning("Animator component not found on parent of Heart.");
+        }
+
+        StartCoroutine(HeartSpawnRoutine()); // Start the enable-disable loop
     }
+
+    private IEnumerator HeartSpawnRoutine()
+    {
+        while (true)  // Infinite loop to keep repeating the cycle
+        {
+            yield return new WaitForSeconds(60f); // Wait for 60 seconds
+            gameObject.SetActive(true); // Enable heart
+            Debug.Log("Heart Enabled");
+            yield return new WaitForSeconds(15f); // Wait for 15 seconds
+            gameObject.SetActive(false); // Disable heart
+            Debug.Log("Heart Disabled");
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
             PickupHeart();
             Debug.Log("Collided with heart +1");
         }
         else
-            Debug.Log("no");
+        {
+            Debug.Log("No collision with player.");
+        }
     }
+
     private void PickupHeart()
     {
-        //+fish Count
-        //+ score
-        // play sfx
-        // trigger an animation
-        //ani.SetTrigger("Pickup");
-        // AudioManager.Instance.PlayMusicWithXFade(FishSound, 0.7f);
-        GameStats.Instance.OnCollectHeart();
+        if (GameStats.Instance != null)
+        {
+            GameStats.Instance.OnCollectHeart();
+        }
+        else
+        {
+            Debug.LogError("GameStats Instance is null. Ensure it's properly initialized.");
+        }
+
+        if (ani != null)
+        {
+            ani.SetTrigger("Pickup");
+        }
+
         gameObject.SetActive(false);
     }
+
     public void OnShowChunk()
     {
-        ani?.SetTrigger("Idle");
+        if (ani != null)
+        {
+            ani.SetTrigger("Idle");
+        }
     }
 }
